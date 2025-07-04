@@ -1,8 +1,8 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
-import { connectToRoom } from "../data/api";
+import { connectToRoom } from "@/data/api";
 import { toast } from "sonner";
-import Whiteboard from "../components/Whiteboard";
+import Whiteboard from "@/components/Whiteboard";
 
 function RoomPage() {
   const { roomId } = useParams();

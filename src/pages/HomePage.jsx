@@ -1,5 +1,5 @@
 import { LogIn, Plus } from "lucide-react";
-import { Button } from "../components/ui/button";
+import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
@@ -7,17 +7,17 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "../components/ui/dialog";
+} from "@/components/ui/dialog";
 import {
   InputOTP,
   InputOTPGroup,
   InputOTPSeparator,
   InputOTPSlot,
-} from "../components/ui/input-otp";
+} from "@/components/ui/input-otp";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Label } from "../components/ui/label";
-import { generateRoomCode } from "../lib/utils";
+import { Label } from "@/components/ui/label";
+import { generateRoomCode } from "@/lib/utils";
 
 const Home = () => {
   const [roomId, setRoomId] = useState("");

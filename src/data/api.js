@@ -1,5 +1,5 @@
 import axios from "axios";
-import { isValidRoomId } from "../lib/utils";
+import { isValidRoomId } from "@/lib/utils";
 
 export const connectToRoom = async (roomId = "") => {
   let joiningRoomId = roomId.trim();

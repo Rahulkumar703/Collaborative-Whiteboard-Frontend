@@ -1,10 +1,10 @@
 // client/src/App.js
 import React from "react";
 import { Routes, Route } from "react-router-dom";
-import HomePage from "./pages/HomePage";
-import RoomPage from "./pages/RoomPage"; // Import the new RoomPage
-import { Toaster } from "./components/ui/sonner";
-import NotFound from "./pages/NotFound";
+import HomePage from "@/pages/HomePage";
+import RoomPage from "@/pages/RoomPage"; // Import the new RoomPage
+import { Toaster } from "@/components/ui/sonner";
+import NotFound from "@/pages/NotFound";
 
 function App() {
   return (
