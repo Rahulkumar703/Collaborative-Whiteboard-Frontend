@@ -1,5 +1,5 @@
 // src/context/useWhiteboard.js
-import { WhiteboardContext } from "../context/whiteboardContext";
+import { WhiteboardContext } from "../context/WhiteboardContext";
 import { useContext } from "react";
 
 export const useWhiteboard = () => {

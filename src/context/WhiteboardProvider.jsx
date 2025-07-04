@@ -1,7 +1,7 @@
 // src/context/WhiteboardContext.jsx
 import { useRef, useState } from "react";
 import { colors } from "../lib/utils";
-import { WhiteboardContext } from "./whiteboardContext";
+import { WhiteboardContext } from "./WhiteboardContext";
 
 export const WhiteboardProvider = ({ children }) => {
   const canvasRef = useRef(null);

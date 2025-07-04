@@ -16,15 +16,30 @@ import {
   InputOTPSlot,
 } from "../components/ui/input-otp";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
+import { Label } from "../components/ui/label";
+import { Input } from "../components/ui/input";
 
 const Home = () => {
   const [roomId, setRoomId] = useState("");
+  const [name, setName] = useState("");
   const navigate = useNavigate();
 
+  useEffect(() => {
+    const storedName = localStorage.getItem("name");
+    if (storedName) {
+      setName(storedName);
+    }
+  }, []);
+
   const joinRoom = () => {
+    if (!roomId || !name) {
+      toast.error("Please enter both your name and a valid room ID.");
+      return;
+    }
+    localStorage.setItem("name", name);
     if (roomId.length === 6) {
       navigate(`/room/${roomId.slice(0, 3)}-${roomId.slice(3)}`);
     } else {
@@ -75,7 +90,20 @@ const Home = () => {
                 room ID, please ask the room owner to share it with you.
               </DialogDescription>
             </DialogHeader>
-            <div className="flex items-center justify-center">
+            <form className="flex flex-col gap-4 items-start w-full">
+              <Label htmlFor="room-id" className="text-left ">
+                Name
+              </Label>
+              <Input
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                id="name"
+                className="w-full"
+                placeholder="Enter your name"
+              />
+              <Label htmlFor="room-id" className="text-left ">
+                Room ID
+              </Label>
               <InputOTP
                 maxLength={6}
                 value={roomId}
@@ -93,8 +121,8 @@ const Home = () => {
                   <InputOTPSlot index={5} className={"uppercase"} />
                 </InputOTPGroup>
               </InputOTP>
-            </div>
-            <Button className={"flex items-center gap-2"} onClick={joinRoom}>
+            </form>
+            <Button onClick={joinRoom} className={"flex items-center gap-2"}>
               Join Room
             </Button>
           </DialogContent>

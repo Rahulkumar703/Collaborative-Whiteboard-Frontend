@@ -15,12 +15,12 @@ const Whiteboard = () => {
 
     const dpr = window.devicePixelRatio || 1;
     canvas.width = window.innerWidth * dpr;
-    canvas.height = (window.innerHeight - 80) * dpr;
+    canvas.height = (window.innerHeight - 113) * dpr;
     canvas.style.width = `${window.innerWidth}px`;
-    canvas.style.height = `${window.innerHeight - 80}px`;
+    canvas.style.height = `${window.innerHeight - 113}px`;
 
     const ctx = canvas.getContext("2d");
-    ctx.scale(dpr, dpr); // Ensure crisp drawing
+    ctx.scale(dpr, dpr);
     ctx.lineCap = "round";
     ctx.strokeStyle = color.bg;
     ctx.lineWidth = lineWidth;
@@ -33,19 +33,32 @@ const Whiteboard = () => {
       ctxRef.current.lineWidth = lineWidth;
     }
   }, [color, lineWidth]);
+  const getCanvasCoordinates = (e, canvas) => {
+    const rect = canvas.getBoundingClientRect();
+    const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+    const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+    return {
+      x: clientX - rect.left,
+      y: clientY - rect.top,
+    };
+  };
 
   const startDrawing = (e) => {
-    const { offsetX, offsetY } = e.nativeEvent;
+    e.preventDefault();
+    const canvas = canvasRef.current;
+    const { x, y } = getCanvasCoordinates(e, canvas);
     ctxRef.current.beginPath();
-    ctxRef.current.moveTo(offsetX, offsetY);
-    setLastPoint({ x: offsetX, y: offsetY });
+    ctxRef.current.moveTo(x, y);
+    setLastPoint({ x, y });
     setIsDrawing(true);
   };
 
   const draw = (e) => {
     if (!isDrawing || !lastPoint) return;
-    const { offsetX, offsetY } = e.nativeEvent;
-    drawQueue.current.push({ x: offsetX, y: offsetY });
+    e.preventDefault();
+    const canvas = canvasRef.current;
+    const { x, y } = getCanvasCoordinates(e, canvas);
+    drawQueue.current.push({ x, y });
     if (!frameRef.current) frameRef.current = requestAnimationFrame(flushDraw);
   };
 
@@ -67,8 +80,9 @@ const Whiteboard = () => {
     frameRef.current = null;
   };
 
-  const stopDrawing = () => {
-    flushDraw(); // flush remaining
+  const stopDrawing = (e) => {
+    e?.preventDefault?.();
+    flushDraw();
     ctxRef.current.closePath();
     setIsDrawing(false);
     setLastPoint(null);
@@ -77,11 +91,15 @@ const Whiteboard = () => {
   return (
     <canvas
       ref={canvasRef}
-      className="w-full h-full bg-white"
+      className="bg-white flex-1 border touch-none"
       onMouseDown={startDrawing}
+      onTouchStart={startDrawing}
       onMouseMove={draw}
+      onTouchMove={draw}
       onMouseUp={stopDrawing}
+      onTouchEnd={stopDrawing}
       onMouseLeave={stopDrawing}
+      onTouchCancel={stopDrawing}
     />
   );
 };

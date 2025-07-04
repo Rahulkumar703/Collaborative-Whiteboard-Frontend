@@ -29,11 +29,10 @@ const frontendUrl = import.meta.env.VITE_FRONTEND_URL;
 
 const RoomInfo = ({ roomId }) => {
   const Collaborators = [
-    { name: "shadcn", initials: "CN" },
-    { name: "leerob", initials: "LR" },
-    { name: "evilrabbit", initials: "ER" },
-    { name: "alien", initials: "AL" },
-    { name: "Ben", initials: "BE" },
+    { name: "You", initials: "Y" },
+    // { name: "Sonu", initials: "S" },
+    // { name: "Rohit", initials: "R" },
+    // { name: "Sizuka", initials: "S" },
   ];
   const navigate = useNavigate();
 
@@ -139,15 +138,15 @@ const RoomInfo = ({ roomId }) => {
         <Dialog>
           <DialogTrigger asChild>
             <div className="cursor-pointer *:data-[slot=avatar]:ring-background flex -space-x-2 *:data-[slot=avatar]:ring-2 *:data-[slot=avatar]:grayscale">
-              {Collaborators.slice(0, 2).map((contributor, index) => (
+              {Collaborators.slice(1, 3).map((contributor, index) => (
                 <Avatar key={index}>
                   <AvatarImage alt={`@${contributor.name}`} />
                   <AvatarFallback>{contributor.initials}</AvatarFallback>
                 </Avatar>
               ))}
-              {Collaborators.length > 2 && (
+              {Collaborators.length > 3 && (
                 <Avatar className="bg-gray-200 text-gray-800">
-                  <AvatarFallback>+{Collaborators.length - 2}</AvatarFallback>
+                  <AvatarFallback>+{Collaborators.length - 3}</AvatarFallback>
                 </Avatar>
               )}
             </div>

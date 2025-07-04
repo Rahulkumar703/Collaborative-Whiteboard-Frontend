@@ -40,6 +40,7 @@
   --radius-xl: calc(var(--radius) + 4px);
 }
 :root {
+  --cursor-invisible: none;
   --background: oklch(1 0 0);
   --foreground: oklch(0.145 0 0);
   --radius: 0.625rem;
