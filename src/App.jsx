@@ -1,18 +1,23 @@
-import { Route, Routes } from "react-router-dom";
-import NotFound from "./not-found";
-import Home from "./pages/home";
-import { WhiteboardProvider } from "./context/WhiteboardProvider";
-import { Room } from "./pages/room";
+// client/src/App.js
+import React from "react";
+import { Routes, Route } from "react-router-dom";
+import HomePage from "./pages/HomePage";
+import RoomPage from "./pages/RoomPage"; // Import the new RoomPage
+import { Toaster } from "./components/ui/sonner";
+import NotFound from "./pages/NotFound";
 
 function App() {
   return (
-    <WhiteboardProvider>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/room/:roomId" element={<Room />} />
-        <Route path="*" element={<NotFound />} />
-      </Routes>
-    </WhiteboardProvider>
+    <>
+      <div className="App">
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/room/:roomId" element={<RoomPage />} />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </div>
+      <Toaster />
+    </>
   );
 }
 

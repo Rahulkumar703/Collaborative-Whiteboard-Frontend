@@ -1,104 +1,66 @@
-import { colors } from "../lib/utils";
-import { Brush, Eraser } from "lucide-react";
-import { Slider } from "./ui/slider";
+import React from "react";
 import { Button } from "./ui/button";
-import { Separator } from "./ui/separator";
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogTrigger,
-} from "../components/ui/alert-dialog";
-import RoomInfo from "./room-info";
-import { useWhiteboard } from "../hooks/useWhiteboard";
+import { Slider } from "./ui/slider";
+import { Trash2 } from "lucide-react";
 
-const Toolbar = ({ roomId }) => {
-  const { color, setColor, lineWidth, setLineWidth, clearCanvas } =
-    useWhiteboard();
+function Toolbar({
+  onColorChange,
+  onWidthChange,
+  onClearCanvas,
+  currentColor,
+  currentWidth,
+}) {
+  const colors = [
+    "#000000",
+    "#FF0000",
+    "#0000FF",
+    "#008000",
+    "#FF00FF",
+    "#FFA500",
+  ];
 
   return (
-    <div className="flex md:h-36 items-center w-full p-4 shadow-lg border-b relative z-50 gap-4">
-      {/* Logo */}
-      <div className="flex-1">
-        <img src="/logo.svg" alt="Collaborative Paint" className="w-16 h-16" />
-      </div>
-
-      {/* Active brush color preview */}
-      <div className="flex flex-col gap-2">
-        <div
-          className="w-10 h-10 rounded-full grid place-items-center border-2 shadow-lg cursor-pointer"
-          style={{ backgroundColor: color.bg, color: color.text }}
-        >
-          <Brush size={20} />
-        </div>
-
-        {/* Clear canvas confirmation dialog */}
-        <AlertDialog>
-          <AlertDialogTrigger asChild>
-            <Button variant="outline" size="sm">
-              <Eraser className="w-4 h-4" />
-            </Button>
-          </AlertDialogTrigger>
-          <AlertDialogContent>
-            <AlertDialogHeader>
-              <AlertDialogTitle>
-                Are you absolutely sure to clear the canvas?
-              </AlertDialogTitle>
-              <AlertDialogDescription>
-                This action cannot be undone. This will permanently delete all
-                drawings on the canvas.
-              </AlertDialogDescription>
-            </AlertDialogHeader>
-            <AlertDialogFooter>
-              <AlertDialogCancel>Cancel</AlertDialogCancel>
-              <AlertDialogAction onClick={clearCanvas}>
-                Confirm
-              </AlertDialogAction>
-            </AlertDialogFooter>
-          </AlertDialogContent>
-        </AlertDialog>
-      </div>
-
-      <Separator orientation="vertical" className="h-full" />
-
-      {/* Color palette + stroke width slider */}
-      <div className="flex flex-col gap-2">
-        <div className="flex gap-2">
-          {colors.map((clr, idx) => (
-            <div
-              key={idx}
-              className="w-8 h-8 rounded-full border-2 shadow-lg cursor-pointer hover:scale-110 transition"
-              style={{ backgroundColor: clr.bg, color: clr.text }}
-              onClick={() => setColor(clr)}
+    <div className="sticky top-0 left-0 z-10 w-full bg-secondary shadow-md p-4 border-b">
+      <div className="flex flex-wrap gap-6 items-center justify-between max-w-5xl mx-auto">
+        <div className="flex items-center gap-2 md:w-auto justify-center w-full">
+          {colors.map((color) => (
+            <button
+              key={color}
+              onClick={() => onColorChange(color)}
+              className={`w-6 h-6 rounded-full border-2 transition-all duration-200 ${
+                currentColor === color
+                  ? "border-black scale-110"
+                  : "border-gray-300"
+              }`}
+              style={{ backgroundColor: color }}
+              aria-label={`Select ${color}`}
             />
           ))}
         </div>
 
-        <div className="flex items-center gap-2">
-          <Slider
-            defaultValue={[lineWidth]}
-            min={1}
-            max={10}
-            step={1}
-            onValueChange={(val) => setLineWidth(val[0])}
-          />
-          <Button variant="ghost" size="sm">
-            {lineWidth}
-          </Button>
+        <div className="flex flex-col items-center gap-3 w-60">
+          <span className="text-sm font-medium text-muted-foreground whitespace-nowrap">
+            Stroke Width:
+          </span>
+          <div className="flex items-center gap-2 flex-1 w-full">
+            <Slider
+              min={1}
+              max={20}
+              step={1}
+              defaultValue={[currentWidth]}
+              value={[currentWidth]}
+              onValueChange={([value]) => onWidthChange(value)}
+            />
+            <span className="text-sm">{currentWidth}px</span>
+          </div>
         </div>
+
+        <Button variant="destructive" onClick={onClearCanvas}>
+          <Trash2 className="h-4 w-4" />
+        </Button>
       </div>
-
-      <Separator orientation="vertical" className="h-full" />
-
-      {/* Room info section */}
-      <RoomInfo roomId={roomId} />
     </div>
   );
-};
+}
 
 export default Toolbar;
