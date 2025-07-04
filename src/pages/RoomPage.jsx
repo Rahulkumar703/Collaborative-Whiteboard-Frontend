@@ -1,20 +1,8 @@
 import { useParams } from "react-router-dom";
-import Whiteboard from "../components/Whiteboard";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "../components/ui/card";
-import { Input } from "../components/ui/input";
-import { Label } from "../components/ui/label";
-import { Button } from "../components/ui/button";
-import { LogIn } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { connectToRoom } from "../data/api";
 import { toast } from "sonner";
+import Whiteboard from "../components/Whiteboard";
 
 function RoomPage() {
   const { roomId } = useParams();
