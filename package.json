@@ -2,7 +2,7 @@
   "name": "frontend",
   "private": true,
   "version": "0.0.0",
-  "homepage": "https://rahulkumar703.github.io/Collaborative-Whiteboard-Frontend",
+  "homepage": "https://rahulkumar703.github.io/Collaborative-Whiteboard-Frontend/",
   "type": "module",
   "scripts": {
     "predeploy": "npm run build",

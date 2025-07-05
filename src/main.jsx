@@ -7,7 +7,7 @@ import "./index.css";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <BrowserRouter>
+    <BrowserRouter basename="/Collaborative-Whiteboard-Frontend">
       <App />
       <Toaster />
     </BrowserRouter>
