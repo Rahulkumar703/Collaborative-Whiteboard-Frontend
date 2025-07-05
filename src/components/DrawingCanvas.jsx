@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 // Drawing helpers moved from Whiteboard.jsx
 export function drawStroke(ctx, path, color, width) {

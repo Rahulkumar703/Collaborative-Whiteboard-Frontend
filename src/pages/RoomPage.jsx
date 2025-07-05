@@ -1,9 +1,10 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useRef, useState, lazy, Suspense } from "react";
 import { toast } from "sonner";
+import Loader from "../components/Loader";
 
 // Lazy-load the Whiteboard component
-const Whiteboard = lazy(() => import("@/components/Whiteboard"));
+const Whiteboard = lazy(() => import("../components/Whiteboard"));
 
 function RoomPage() {
   const { roomId } = useParams();
@@ -17,7 +18,7 @@ function RoomPage() {
 
       try {
         // Optionally dynamically import API too
-        const { connectToRoom } = await import("@/data/api");
+        const { connectToRoom } = await import("../data/api");
         const joinedRoomId = await connectToRoom(roomId);
         if (roomId !== joinedRoomId) {
           setJoiningRoomId(joinedRoomId);
@@ -34,9 +35,7 @@ function RoomPage() {
   }, [roomId]);
 
   return (
-    <Suspense
-      fallback={<div className="text-center mt-10">Loading whiteboard...</div>}
-    >
+    <Suspense fallback={<Loader />}>
       <Whiteboard roomId={joiningRoomId} />
     </Suspense>
   );

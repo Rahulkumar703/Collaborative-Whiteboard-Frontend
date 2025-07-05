@@ -1,4 +1,3 @@
-import React from "react";
 import { Button } from "./ui/button";
 import { Slider } from "./ui/slider";
 import { Trash2 } from "lucide-react";
