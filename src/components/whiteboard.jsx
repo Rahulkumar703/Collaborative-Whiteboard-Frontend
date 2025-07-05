@@ -1,16 +1,16 @@
-import React, { useRef, useEffect, useState, useCallback } from "react";
+import { useRef, useEffect, useState, useCallback } from "react";
 import io from "socket.io-client";
 import { throttle } from "lodash";
-import Toolbar from "@/components/Toolbar";
-import UserCursors from "@/components/UserCursors";
+import Toolbar from "./Toolbar";
+import UserCursors from "./UserCursors";
 import {
   Dialog,
   DialogTrigger,
   DialogContent,
   DialogHeader,
   DialogTitle,
-} from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
+} from "./ui/dialog";
+import { Button } from "./ui/button";
 
 function Whiteboard({ roomId }) {
   const canvasRef = useRef(null);

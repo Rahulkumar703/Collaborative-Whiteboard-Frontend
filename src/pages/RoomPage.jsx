@@ -1,13 +1,13 @@
 import { useParams } from "react-router-dom";
-import { useEffect, useRef, useState } from "react";
-import { connectToRoom } from "@/data/api";
+import { useEffect, useRef, useState, lazy, Suspense } from "react";
 import { toast } from "sonner";
-import Whiteboard from "@/components/Whiteboard";
+
+// Lazy-load the Whiteboard component
+const Whiteboard = lazy(() => import("@/components/Whiteboard"));
 
 function RoomPage() {
   const { roomId } = useParams();
   const [joiningRoomId, setJoiningRoomId] = useState(roomId);
-
   const hasJoinedRef = useRef(false);
 
   useEffect(() => {
@@ -16,6 +16,8 @@ function RoomPage() {
       hasJoinedRef.current = true;
 
       try {
+        // Optionally dynamically import API too
+        const { connectToRoom } = await import("@/data/api");
         const joinedRoomId = await connectToRoom(roomId);
         if (roomId !== joinedRoomId) {
           setJoiningRoomId(joinedRoomId);
@@ -24,14 +26,20 @@ function RoomPage() {
           setJoiningRoomId(joinedRoomId);
         }
       } catch (error) {
-        toast.error(error.message);
+        toast.error(error.message || "Failed to join room");
       }
     };
 
     handleJoinRoom();
   }, [roomId]);
 
-  return <Whiteboard roomId={joiningRoomId} />;
+  return (
+    <Suspense
+      fallback={<div className="text-center mt-10">Loading whiteboard...</div>}
+    >
+      <Whiteboard roomId={joiningRoomId} />
+    </Suspense>
+  );
 }
 
 export default RoomPage;
