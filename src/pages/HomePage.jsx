@@ -36,7 +36,7 @@ const Home = () => {
         Create or join a room to start collaborating on your next masterpiece!
       </p>
       <img
-        src="/logo.svg"
+        src="/Collaborative-Whiteboard-Frontend/logo.svg"
         alt="Collaborative Paint"
         className="w-52 h-52 mb-4"
       />
